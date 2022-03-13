@@ -1,29 +1,32 @@
-const reviewersForm = document.querySelector('.js-issue-sidebar-form');
+function constructButtons() {
+	const reviewersForm = document.querySelector('.js-issue-sidebar-form');
 
-let btnContainer = document.createElement('div');
-btnContainer.id = 'copyBtnContainer';
+	let btnContainer = document.createElement('div');
+	btnContainer.id = 'copyBtnContainer';
 
-reviewersForm.append(btnContainer);
-
-let quickCopyBtn = document.createElement('button');
-quickCopyBtn.innerText = 'Quick Copy';
-quickCopyBtn.type = 'button';
-quickCopyBtn.id = 'copyBtn';
-quickCopyBtn.classList.add('btn');
-quickCopyBtn.addEventListener('click', handleQuickCopy);
-
+	let quickCopyBtn = document.createElement('button');
+	quickCopyBtn.innerText = 'Quick Copy';
+	quickCopyBtn.type = 'button';
+	quickCopyBtn.id = 'copyBtn';
+	quickCopyBtn.classList.add('btn');
+	quickCopyBtn.addEventListener('click', handleQuickCopy);
 
 
-btnContainer.append(quickCopyBtn);
 
-let copyOptionsBtn = document.createElement('Button');
-copyOptionsBtn.innerText = 'TODO';
-copyOptionsBtn.type = 'button';
-copyOptionsBtn.id = 'copyOptionsBtn';
-copyOptionsBtn.classList.add('btn');
-// copyOptionsBtn.addEventListener('click', );
+	let copyOptionsBtn = document.createElement('Button');
+	copyOptionsBtn.innerText = 'TODO';
+	copyOptionsBtn.type = 'button';
+	copyOptionsBtn.id = 'copyOptionsBtn';
+	copyOptionsBtn.classList.add('btn');
+	// copyOptionsBtn.addEventListener('click', );
 
-btnContainer.append(copyOptionsBtn);
+
+	reviewersForm.append(btnContainer);
+	btnContainer.append(quickCopyBtn);
+	btnContainer.append(copyOptionsBtn);
+}
+
+
 
 function copyTextToClipboard(text) {
 	//Create a textbox field where we can insert text to. 
@@ -60,6 +63,7 @@ function handleQuickCopy() {
 
 	let requestString = 'Requested: ';
 
+	const reviewersForm = document.querySelector('.js-issue-sidebar-form');
 	let assignees = reviewersForm.getElementsByClassName('assignee');
 
 	if (assignees.length > 0) {
@@ -70,6 +74,8 @@ function handleQuickCopy() {
 	}
 
 	copyTextToClipboard(`${TitleString} \n ${requestString}`);
+	
+	let quickCopyBtn = document.querySelector('#copyBtn');
 	quickCopyBtn.innerText = '✔️';
 	setTimeout(() => {
 		quickCopyBtn.innerText = 'Quick Copy';
@@ -77,3 +83,34 @@ function handleQuickCopy() {
 	
 };
 
+
+function constructButtons() {
+	const reviewersForm = document.querySelector('.js-issue-sidebar-form');
+
+	let btnContainer = document.createElement('div');
+	btnContainer.id = 'copyBtnContainer';
+
+	let quickCopyBtn = document.createElement('button');
+	quickCopyBtn.innerText = 'Quick Copy';
+	quickCopyBtn.type = 'button';
+	quickCopyBtn.id = 'copyBtn';
+	quickCopyBtn.classList.add('btn');
+	quickCopyBtn.addEventListener('click', handleQuickCopy);
+
+
+
+	let copyOptionsBtn = document.createElement('Button');
+	copyOptionsBtn.innerText = 'TODO';
+	copyOptionsBtn.type = 'button';
+	copyOptionsBtn.id = 'copyOptionsBtn';
+	copyOptionsBtn.classList.add('btn');
+	// copyOptionsBtn.addEventListener('click', );
+
+
+	reviewersForm.append(btnContainer);
+	btnContainer.append(quickCopyBtn);
+	btnContainer.append(copyOptionsBtn);
+}
+
+
+constructButtons()
