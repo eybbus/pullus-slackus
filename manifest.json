@@ -7,11 +7,27 @@
 		"service_worker": "/js/background.js"
 	},
 	"options_page": "./options.html",
+	"content_scripts": [
+		{
+			"matches": [
+				"https://github.com/*/*/pull/*"
+			],
+			"css": [
+				"/css/contentScript.css"
+			],
+			"js": [
+				"/js/contentScript.js"
+			]
+		}
+	],
 	"permissions": [
 		"storage",
 		"activeTab",
 		"scripting"
 	],
+	"browser_action": {
+		"default_title": "Append Test Text"
+	},
 	"action": {
 		"default_popup": "./popup.html",
 		"default_icon": {
