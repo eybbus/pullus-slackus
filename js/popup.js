@@ -65,14 +65,14 @@ function copyText() {
 	let pullName =  fullTitle.children[0].innerText
 	let pullId = fullTitle.children[1].innerText
 
-	let test = document.getElementsByClassName('js-issue-sidebar-form')[0]
-	console.log(test)
+	let reviewersForm = document.getElementsByClassName('js-issue-sidebar-form')[0]
+	
 
 	let TitleString = `${pullName} [${pullId}](${window.location.href})`
 
 	let requestString = 'Requested: '
 
-	let assignees = test.getElementsByClassName('assignee')
+	let assignees = reviewersForm.getElementsByClassName('assignee')
 
 	if (assignees.length > 0) {
 		[...assignees].forEach(el => {
@@ -80,13 +80,6 @@ function copyText() {
 			requestString = requestString + ` @${userAccountName}`
 		})
 	}
-
-	let button = document.createElement('button')
-	button.type = 'button'
-	button.innerText = 'Copy to clipboard'
-
-
-	test.append(button)
-
+	
 	copyTextToClipboard(`${TitleString} \n ${requestString}`)
 }
