@@ -4,9 +4,10 @@
  */
 function constructButtons() {
   const reviewersForm = document.querySelector(".js-issue-sidebar-form");
+  const buttonsAlreadyExists = !!document.querySelector("#copyBtnContainer");
 
   // The reviewForms does not exist.
-  if (!reviewersForm) return false;
+  if (!reviewersForm || buttonsAlreadyExists) return false;
 
   let btnContainer = document.createElement("div");
   btnContainer.id = "copyBtnContainer";
