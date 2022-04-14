@@ -127,16 +127,25 @@ new MutationObserver(() => {
   }
 }).observe(document, { subtree: true, childList: true });
 
-function onUrlChange() {
+function isPullRequestUrl() {
   const isPullRequestRegex = /\/pull\/\d+$/;
-  console.log("URL changed!", location.pathname);
-  if (isPullRequestRegex.test(location.pathname)) {
+  console.log("URL Tested!", location.pathname);
+
+  return isPullRequestRegex.test(location.pathname);
+}
+
+function onUrlChange() {
+  if (isPullRequestUrl()) {
     elementReady(".js-issue-sidebar-form").then(() => constructButtons());
   }
 }
 
-if (constructButtons()) {
-  console.log("sucessfully Added");
+if (isPullRequestUrl()) {
+  if (constructButtons()) {
+    console.log("sucessfully Added");
+  } else {
+    console.log("No luck");
+  }
 } else {
-  console.log("No luck");
+  console.log("not A pull Request");
 }
