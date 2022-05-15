@@ -1,4 +1,24 @@
 /**
+ *
+ * @param {string} name
+ * @param {string} type
+ * @param {string} id
+ * @param {string[]} classList
+ * @param {() => void} onclick
+ * @returns HTMLButtonElement
+ */
+function createButton(name, type, id, classList, onclick) {
+  let button = document.createElement("button");
+  button.innerText = name;
+  button.type = type;
+  button.id = id;
+  button.classList.add(classList);
+  button.addEventListener("click", onclick);
+
+  return button;
+}
+
+/**
  * Constructs the buttons and adds them to the dom.
  * @returns boolean, was it a success or a failure
  */
@@ -12,23 +32,35 @@ function constructButtons() {
   let btnContainer = document.createElement("div");
   btnContainer.id = "copyBtnContainer";
 
-  let quickCopyBtn = document.createElement("button");
-  quickCopyBtn.innerText = "Quick Copy";
-  quickCopyBtn.type = "button";
-  quickCopyBtn.id = "copyBtn";
-  quickCopyBtn.classList.add("btn");
-  quickCopyBtn.addEventListener("click", handleQuickCopy);
+  let quickCopyBtn = createButton(
+    "Quick Copy",
+    "button",
+    "copyBtn",
+    "btn",
+    handleQuickCopy
+  );
 
-  let copyOptionsBtn = document.createElement("Button");
-  copyOptionsBtn.innerText = "TODO";
-  copyOptionsBtn.type = "button";
-  copyOptionsBtn.id = "copyOptionsBtn";
-  copyOptionsBtn.classList.add("btn");
-  // copyOptionsBtn.addEventListener('click', );
+  let copyOptionsBtn = createButton(
+    "Options [TODO]",
+    "button",
+    "copyOptionsBtn",
+    "btn",
+    () => {}
+  );
+  copyOptionsBtn.disabled = true;
+
+  let customCopyBtn = createButton(
+    "Custom Copy [TODO]",
+    "button",
+    "customCopyBtn",
+    "btn",
+    () => {}
+  );
 
   reviewersForm.append(btnContainer);
   btnContainer.append(quickCopyBtn);
   btnContainer.append(copyOptionsBtn);
+  btnContainer.append(customCopyBtn);
 
   return true;
 }
@@ -61,25 +93,36 @@ function copyTextToClipboard(text) {
 }
 
 function handleQuickCopy() {
-  let fullTitle = document.getElementsByClassName("gh-header-title")[0];
-  let pullName = fullTitle.children[0].innerText;
-  let pullId = fullTitle.children[1].innerText;
+  let projectField = "_*Project:*_         ";
+  let nameField = "_*Name:*_           ";
+  let requestField = "_*Requested:*_   ";
 
-  let TitleString = `${pullName} [${pullId}](${window.location.href})`;
+  let projectElement = document.querySelector(
+    '[data-pjax="#repo-content-pjax-container"]'
+  );
 
-  let requestString = "Requested: ";
+  projectField += `[${projectElement.outerText}](${projectElement.href})`;
 
-  const reviewersForm = document.querySelector(".js-issue-sidebar-form");
-  let assignees = reviewersForm.getElementsByClassName("assignee");
+  let nameElement = document.getElementsByClassName("gh-header-title")[0];
+  let pullName = nameElement.children[0].innerText;
+  let pullId = nameElement.children[1].innerText;
+
+  nameField += `${pullName} [${pullId}](${window.location.href})`;
+
+  const reviewersFormElement = document.querySelector(".js-issue-sidebar-form");
+  let assignees = reviewersFormElement.getElementsByClassName("assignee");
 
   if (assignees.length > 0) {
     [...assignees].forEach((el) => {
       let userAccountName = el.innerText;
-      requestString = requestString + ` @${userAccountName}`;
+      requestField += ` @${userAccountName}`;
     });
   }
 
-  copyTextToClipboard(`${TitleString} \n ${requestString}`);
+  copyTextToClipboard(`
+  ${projectField}
+  ${nameField}
+  ${requestField}`);
 
   let quickCopyBtn = document.querySelector("#copyBtn");
   quickCopyBtn.innerText = "✔️";

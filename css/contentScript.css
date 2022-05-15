@@ -1,11 +1,12 @@
 #copyBtnContainer {
 	display: flex;
+	flex-direction: column;
 	justify-content: space-between;
 
 	transition: all;
 }
 
 #copyBtnContainer > button {
-	transition: all 1s;
-	width: 49%;
+	transition: all 0.25s;
+	margin-bottom: 5px;
 }
